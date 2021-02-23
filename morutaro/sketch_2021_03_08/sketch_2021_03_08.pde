@@ -55,7 +55,7 @@ void showShadow(){
 }
 
 void mouseClicked() {
-  ellipse(mouseX, mouseY, 50, 50);
+  //ellipse(mouseX, mouseY, 50, 50);
 }
 
 void mousePressed() {
