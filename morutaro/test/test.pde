@@ -19,7 +19,7 @@ void draw() {
   rect(200, 400, 100, 100);
 }
 
-void mousePressed() {
+void  touchStarted() {
   if (mouseX >= 200 && mouseX <= 300 && mouseY >= 400 && mouseY <= 500){
     clickCount--;
   } else if (mouseX >= 400 && mouseX <= 500 && mouseY >= 400 && mouseY <= 500){
