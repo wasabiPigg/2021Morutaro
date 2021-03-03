@@ -28,6 +28,8 @@ Int[] morunn = {350, 900};
 Int[] firstPerson = {350, 900};
 Int[] secondPerson = {350, 900};
 Int[] thirdPerson = {350, 900};
+// 向き
+String d1, d2, d3;
 
 // もるんの正面ひとつまえのマス
 Int[] action = {350, 1100};
@@ -85,9 +87,6 @@ void setup() {
 void draw() {
   charaResize();
   showUI();
-  if (showMsgFlag == true) {
-    showMsg();
-  }
 
   // もるんの正面のマス
   if( direction == "up") {
@@ -113,7 +112,9 @@ void draw() {
       showCharactors();
     }
   }
-
+  if (showMsgFlag == true) {
+    showMsg();
+  }
   showShadow();
 }
 
@@ -127,12 +128,19 @@ void showMsg(){
   
   // show name
   textSize(40);
-  text(name, 120, 1130.34957);
+  text(name, 130, 1130.34957);
   
   // show msg
   textSize(30);
   fill(255);
-  text(msg, 130, 1200);
+  text(msg, 150, 1200);
+
+  // さんかくのまーく
+  if ((frameCount % 10) < 5) {
+    textSize(40);
+    fill(255);
+    text("▼", 850, 1280);
+  }
 }
 
 void charaResize() {
@@ -322,13 +330,13 @@ void showIchira() {
   } else {
     ichira[0] = firstPerson[0];
     ichira[1] = firstPerson[1];
-    if (direction == "down") {
+    if (d1 == "down") {
       image(ichira_front, ichira[0], ichira[1]);
-    } else if (direction == "up") {
+    } else if (d1 == "up") {
       image(ichira_back, ichira[0], ichira[1]);
-    } else if (direction == "left") {
+    } else if (d1 == "left") {
       image(ichira_left, ichira[0], ichira[1]);
-    } else if (direction == "right") {
+    } else if (d1 == "right") {
       image(ichira_right, ichira[0], ichira[1]);
     }
   }
@@ -340,13 +348,13 @@ void showGoin(){
   } else {
     goin[0] = secondPerson[0];
     goin[1] = secondPerson[1];
-    if (direction == "down") {
+    if (d2 == "down") {
       image(goin_front, goin[0], goin[1]);
-    } else if (direction == "up") {
+    } else if (d2 == "up") {
       image(goin_back, goin[0], goin[1]);
-    } else if (direction == "left") {
+    } else if (d2 == "left") {
       image(goin_left, goin[0], goin[1]);
-    } else if (direction == "right") {
+    } else if (d2 == "right") {
       image(goin_right, goin[0], goin[1]);
     }
   }
@@ -358,13 +366,13 @@ void showWasabi(){
   } else {
     wasabi[0] = thirdPerson[0];
     wasabi[1] = thirdPerson[1];
-    if (direction == "down") {
+    if (d3 == "down") {
       image(wasabi_front, wasabi[0], wasabi[1]);
-    } else if (direction == "up") {
+    } else if (d3 == "up") {
       image(wasabi_back, wasabi[0], wasabi[1]);
-    } else if (direction == "left") {
+    } else if (d3 == "left") {
       image(wasabi_left, wasabi[0], wasabi[1]);
-    } else if (direction == "right") {
+    } else if (d3 == "right") {
       image(wasabi_right, wasabi[0], wasabi[1]);
     }
   }
@@ -384,6 +392,27 @@ void showEnd() {
   if(flag_wasabi == true){
     image(wasabi_front, 0, 700);
   }
+  showConfetti();
+}
+
+void showConfetti(){
+  for (int i=0; i<30; i++){
+    fill(254,227,127);
+    noStroke();
+    rect(random(900), random(1500), 20, 20);
+    if(flag_ichira == true){
+      fill(180,52,244);
+      rect(random(900), random(1500), 20, 20);
+    }
+    if(flag_goin == true){
+      fill(69, 95, 208);
+      rect(random(900), random(1500), 20, 20);
+    }
+    if(flag_wasabi == true){
+      fill(236, 114, 197);
+      rect(random(900), random(1500), 20, 20);
+    }
+  }
 }
 
 void showShadow(){
@@ -401,63 +430,84 @@ boolean canStand() {
 void setPerson() {
   int tmp0 = firstPerson[0], tmp1 = firstPerson[1];
   int tmp2 = secondPerson[0], tmp3 = secondPerson[1];
+  String tmpD1 = direction, tmpD2 = d1, tmpD3 = d2;
   firstPerson[0] = morunn[0];
   firstPerson[1] = morunn[1];
   secondPerson[0] = tmp0;
   secondPerson[1]= tmp1;
   thirdPerson[0] = tmp2;
   thirdPerson[1] = tmp3;
+  d1 = tmpD1;
+  d2 = tmpD2;
+  d3 = tmpD3;
 }
 void mouseClicked() {
   if (2241*r<=mouseX && mouseX<=(2241+456)*r && 4465*r<=mouseY && mouseY <= (4465+456)*r){  // A
     aButton = true;
     if (flag_ichira == false && ichira[0] == action[0] && ichira[1] == action[1]){
+      msg = "もるんちゃ一緒に行こ～！的な文章！！";
+      name = "いちら";
+      showMsgFlag = true;
       flag_ichira = true;
-    }
-    if (flag_goin == false && goin[0] == action[0] && goin[1] == action[1]){
+    } else if (flag_goin == false && goin[0] == action[0] && goin[1] == action[1]){
+      msg = "もるんちゃ一緒に行こ～！的な文章！！";
+      name = "誤飲";
+      showMsgFlag = true;
       flag_goin = true;
-    }
-    if (flag_wasabi == false && wasabi[0] == action[0] && wasabi[1] == action[1]){
+    } else if (flag_wasabi == false && wasabi[0] == action[0] && wasabi[1] == action[1]){
+      msg = "もるんちゃおはよ～！！\n一緒についてくね！！！";
+      name = "わさび";
+      showMsgFlag = true;
       flag_wasabi = true;
+    } else {
+      showMsgFlag = false;
     }
   }
   else if (1577*r<=mouseX && mouseX<=(1577+456)*r && 4465*r<=mouseY && mouseY <= (4671+456)*r) {  // B
     bButton = true;
   }
   else if (178*r<=mouseX && mouseX<=(178+975/3)*r && (4309+975/3)*r<=mouseY && mouseY <= (4309+975/3*2)*r) {  // ←
-    left = true;
-    direction = "left";
-    setPerson();
-    morunn[0] -= blockSize;
-    if (canStand() == false) {
-        morunn[0] += blockSize;
+    if (showMsgFlag == false){
+      left = true;
+      direction = "left";
+      setPerson();
+      morunn[0] -= blockSize;
+      if (canStand() == false) {
+          morunn[0] += blockSize;
+      }
     }
   }
   else if ((178+975/3)*r<=mouseX && mouseX<=(178+975/3*2)*r && 4309*r<=mouseY && mouseY <= (4309+975/3)*r) {  // ↑
-    up = true;
-    direction = "up";
-    setPerson();
-    morunn[1] -= blockSize;
-    if (canStand() == false) {
-      morunn[1] += blockSize;
+    if (showMsgFlag == false){
+      up = true;
+      direction = "up";
+      setPerson();
+      morunn[1] -= blockSize;
+      if (canStand() == false) {
+        morunn[1] += blockSize;
+      }
     }
   }
   else if ((178+975/3*2)*r<=mouseX && mouseX<=(178+975)*r && (4309+975/3)*r<=mouseY && mouseY <= (4309+975/3*2)*r) {  // →
-    right = true;
-    direction = "right";
-    setPerson();
-    morunn[0] += blockSize;
-    if (canStand() == false) {
-      morunn[0] -= blockSize;
+    if (showMsgFlag == false){
+      right = true;
+      direction = "right";
+      setPerson();
+      morunn[0] += blockSize;
+      if (canStand() == false) {
+        morunn[0] -= blockSize;
+      }
     }
   }
   else if ((178+975/3)*r<=mouseX && mouseX<=(178+975/3*2)*r && (4309+975/3*2)*r<=mouseY && mouseY <= (4309+975)*r) {  // ↓
-    down = true;
-    direction = "down";
-    setPerson();
-    morunn[1] += blockSize;
-    if (canStand() == false) {
-      morunn[1] -= blockSize;
+    if (showMsgFlag == false){
+      down = true;
+      direction = "down";
+      setPerson();
+      morunn[1] += blockSize;
+      if (canStand() == false) {
+        morunn[1] -= blockSize;
+      }
     }
   }
 }
