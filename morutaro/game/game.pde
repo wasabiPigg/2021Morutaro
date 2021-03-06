@@ -15,6 +15,9 @@ String msg = "";
 // chara event flag
 boolean flag_goin = false, flag_wasabi = false, flag_ichira = false;
 
+// セリフ用
+boolean tmpFlag = false;
+
 // ひとますの大きさ
 int blockSize = 200;
 
@@ -382,15 +385,15 @@ void showEnd() {
   image(bg2, 10, 10);
   fill(0);
   text("おわり！おたおめ！", 200, 400);
-  image(morunn_front, 400, 700);
+  image(morunn_front, 440, 700);
   if(flag_ichira == true){
-    image(ichira_front, 600, 700);
+    image(ichira_front, 650, 700);
   }
   if(flag_goin == true){
-    image(goin_front, 200, 700);
+    image(goin_front, 240, 700);
   }
   if(flag_wasabi == true){
-    image(wasabi_front, 0, 700);
+    image(wasabi_front, 30, 700);
   }
   showConfetti();
 }
@@ -445,20 +448,29 @@ void mouseClicked() {
   if (2241*r<=mouseX && mouseX<=(2241+456)*r && 4465*r<=mouseY && mouseY <= (4465+456)*r){  // A
     aButton = true;
     if (flag_ichira == false && ichira[0] == action[0] && ichira[1] == action[1]){
-      msg = "もるんちゃ一緒に行こ～！的な文章！！";
+      msg = "おはよす！どこいくー？";
       name = "いちら";
       showMsgFlag = true;
       flag_ichira = true;
+      tmpFlag = false;
     } else if (flag_goin == false && goin[0] == action[0] && goin[1] == action[1]){
-      msg = "もるんちゃ一緒に行こ～！的な文章！！";
+      msg = "やあ";
       name = "誤飲";
       showMsgFlag = true;
       flag_goin = true;
+      tmpFlag = true;
     } else if (flag_wasabi == false && wasabi[0] == action[0] && wasabi[1] == action[1]){
       msg = "もるんちゃおはよ～！！\n一緒についてくね！！！";
       name = "わさび";
       showMsgFlag = true;
       flag_wasabi = true;
+      tmpFlag = false;
+    } else if (tmpFlag == true) {
+      msg = "ご一緒しちゃお";
+      name = "誤飲";
+      showMsgFlag = true;
+      flag_goin = true;
+      tmpFlag = false;
     } else {
       showMsgFlag = false;
     }
