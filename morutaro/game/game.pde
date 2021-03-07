@@ -4,6 +4,8 @@ PImage morunn_front, morunn_left, morunn_right, morunn_back;
 PImage ichira_front, ichira_left, ichira_right, ichira_back;
 PImage wasabi_front, wasabi_left, wasabi_right, wasabi_back;
 PImage goin_front, goin_left, goin_right, goin_back;
+PImage endMsg;
+
 // hiritsu
 float r = 1080/2875;
  
@@ -85,6 +87,7 @@ void setup() {
   goin_back = loadImage("./images/charactor/goin-back.png");
   goin_left = loadImage("./images/charactor/goin-left.png");
   goin_right = loadImage("./images/charactor/goin-right.png");
+  endMsg = loadImage("./images/end.png");
 }
 
 void draw() {
@@ -165,6 +168,7 @@ void charaResize() {
   wasabi_left.resize(400, 0);
   wasabi_right.resize(400, 0);
   wasabi_back.resize(400, 0);
+  endMsg.resize(800, 0);
 }
 
 void showCharactors() {
@@ -382,10 +386,11 @@ void showWasabi(){
 }
 
 void showEnd() {
-  image(bg2, 10, 10);
+  image(bg2, 20, 10);
   fill(0);
-  text("おわり！おたおめ！", 200, 400);
+  // text("おわり！おたおめ！", 200, 400);
   image(morunn_front, 440, 700);
+  image(endMsg, 140, 250);
   if(flag_ichira == true){
     image(ichira_front, 650, 700);
   }
